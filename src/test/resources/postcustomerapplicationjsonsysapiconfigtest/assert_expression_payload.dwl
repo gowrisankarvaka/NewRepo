@@ -2,7 +2,7 @@
 import * from dw::test::Asserts
 ---
 payload must equalTo({
-  id: null',
+  id: null,
   items: [
     {
       exception: {
