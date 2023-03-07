@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="sys_api_impl-suite.xml" />
+	<munit:test name="sys_api_implSub_Flow-test" doc:id="3e3756a5-9da6-4848-9545-a507a2ff4d13" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Query" doc:id="25bd5518-ea35-4c64-8987-6ba91a7f6d03" processor="salesforce:query">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="9184fdae-c76c-4626-925e-3184d33de7db" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java  --- readUrl('classpath://sysapiimplSubFlowtest\mock_payload1.dwl')]" mediaType="application/java " encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://sysapiimplSubFlowtest\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="4afdfe05-9f17-4823-b0a8-0a172f41e30c" >
+				<munit:payload value="#[readUrl('classpath://sysapiimplSubFlowtest\set-event_payload1.dwl')]" encoding="UTF-8" />
+				<munit:attributes value="#[readUrl('classpath://sysapiimplSubFlowtest\set-event_attributes1.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://sysapiimplSubFlowtest\set-event_variable_1.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to sys_api_implSub_Flow" doc:id="2d161d80-fc93-4d23-a516-4d80aa3fac0c" name="sys_api_implSub_Flow"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="ed6ea211-0908-4726-b4d8-fc603f49919a" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import sysapiimplSubFlowtest::assert_expression_payload1
+---
+assert_expression_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+	<munit:test name="sys_api_implSub_Flow1-test" doc:id="35d6935c-7930-4555-a599-257bca12eff7" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock Create" doc:id="0efad04a-ccb6-472f-aa79-7d21f224eccb" processor="salesforce:create">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="27ee03f5-5a02-4368-bf6e-3a0286a8e1fb" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/java  --- readUrl('classpath://sysapiimplSubFlow1test\mock_payload1.dwl')]" mediaType="application/java " encoding="UTF-8" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://sysapiimplSubFlow1test\mock_variable_1.dwl')]" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="ffb328ab-0525-4818-ba0b-ca432bd54df7" >
+				<munit:payload value="#[output application/json  --- readUrl('classpath://sysapiimplSubFlow1test\set-event_payload1.dwl')]" encoding="UTF-8" mediaType="application/json " />
+				<munit:attributes value="#[readUrl('classpath://sysapiimplSubFlow1test\set-event_attributes1.dwl')]" />
+				<munit:variables >
+					<munit:variable key="outboundHeaders" value="#[readUrl('classpath://sysapiimplSubFlow1test\set-event_variable_1.dwl')]" />
+				</munit:variables>
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to sys_api_implSub_Flow1" doc:id="7836695d-d731-4ca6-b17e-3c82e89e41eb" name="sys_api_implSub_Flow1"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="279f2944-6869-4d53-99d3-d361b0ada642" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import sysapiimplSubFlow1test::assert_expression_payload1
+---
+assert_expression_payload1::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

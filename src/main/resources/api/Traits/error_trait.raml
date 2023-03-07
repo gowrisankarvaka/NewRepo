@@ -1,0 +1,27 @@
+#%RAML 1.0 Trait
+responses:
+  400:
+        body:
+          application/json:
+            type: string
+            example: "Bad request"
+  401:
+        body:
+          application/json:
+            type: string
+            example: "Unauthorized"
+  403:
+        body:
+          application/json:
+            type: string
+            example: "Forbidden"
+  404:
+        body:
+          application/json:
+            type: string
+            example: "Resource not found"
+  500:
+        body:
+          application/json:
+            type: string
+            example: "Internal server error"

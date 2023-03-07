@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:salesforce="http://www.mulesoft.org/schema/mule/salesforce"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/salesforce http://www.mulesoft.org/schema/mule/salesforce/current/mule-salesforce.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<salesforce:sfdc-config name="Salesforce_Config" doc:name="Salesforce Config" doc:id="07abc399-5a93-4d16-bb42-c53967693fba" >
+		<salesforce:basic-connection username="gowrisankar@apicentrics.com" password="Gowri123@" securityToken="DWIaf5maRJGbPfZc4iLBwsBn" />
+	</salesforce:sfdc-config>
+	<sub-flow name="sys_api_implSub_Flow" doc:id="4d5eadb4-fb43-4531-9d9b-4557551a10c0" >
+		<salesforce:query doc:name="Query" doc:id="9184fdae-c76c-4626-925e-3184d33de7db" config-ref="Salesforce_Config">
+			<salesforce:salesforce-query ><![CDATA[SELECT cid__c,city__c,fname__c,lname__c,street__c FROM customer__c]]></salesforce:salesforce-query>
+		</salesforce:query>
+		<ee:transform doc:name="Transform Message" doc:id="9ee85ceb-737b-4467-b73e-428352e4da30" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</sub-flow>
+	<sub-flow name="sys_api_implSub_Flow1" doc:id="b7e03786-a463-48c0-a6be-a0dede6a49cb" >
+		<ee:transform doc:name="Transform Message" doc:id="6870e293-3d1f-4749-9ef4-3b8e6d590747" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+[{
+	cid__c: payload.cid,
+	city__c: payload.city,
+	fname__c: payload.fname,
+	lname__c: payload.lname,
+	street__c: payload.street
+}]]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<salesforce:create doc:name="Create" doc:id="27ee03f5-5a02-4368-bf6e-3a0286a8e1fb" config-ref="Salesforce_Config" type="customer__c"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="2aae4a74-bff0-42b9-aac6-7e01a451ef99" />
+	</sub-flow>
+</mule>

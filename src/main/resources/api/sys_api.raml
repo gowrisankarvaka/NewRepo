@@ -1,0 +1,40 @@
+#%RAML 1.0
+title: sys_api
+
+types:
+  input_dt: !include Datatypes/dataType.raml
+
+traits:
+  error_resp: !include Traits/error_trait.raml
+
+uses:
+  input_lib: Libraries/input_library.raml
+
+/customer:
+  get:
+    queryParameters:
+      cid:
+        type: number
+        required: false
+        minimum: 0
+        maximum: 50
+        example: 15
+    responses:
+      200:
+        body:
+          application/json:
+            type: input_dt
+            example: !include exchange_modules/a62f6236-0b02-4e5f-a8eb-dc5e37aedb12/example/1.0.0/example.raml
+    is: [error_resp]
+  post:
+    is: [error_resp]
+    body:
+      application/json:
+        type: input_dt
+        example: !include exchange_modules/a62f6236-0b02-4e5f-a8eb-dc5e37aedb12/example/1.0.0/example.raml
+    responses:
+      201:
+        body:
+          application/json:
+            type: string
+            example: "inserted successfully!!!!!"   
