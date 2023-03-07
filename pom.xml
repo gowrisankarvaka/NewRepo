@@ -40,7 +40,7 @@
 						<muleVersion>4.4.0</muleVersion>
 						<username>gowrisankar2</username>
 						<password>Gowri123$</password>
-						<applicationName>apic_sys_api</applicationName>
+						<applicationName>GowriSysApi</applicationName>
 						<environment>Sandbox</environment>
 						<region>us-east-2</region>
 						<workers>1</workers>
