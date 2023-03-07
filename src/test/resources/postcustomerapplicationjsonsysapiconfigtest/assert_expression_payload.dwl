@@ -293,8 +293,9 @@ payload must equalTo({
         ]
       },
       "id": null,
-      "statusCode": "DUPLICATE_VALUE",
-      "successful": false
+      "successful": false,
+      "statusCode": "DUPLICATE_VALUE"
+
     }
   ],
   "successful": false
